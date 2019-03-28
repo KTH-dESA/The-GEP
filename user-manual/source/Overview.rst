@@ -3,7 +3,9 @@ Overview
 
 Scope
 ****************
-The GEP is a portal for electrification investment data, analysis and research. The project output is primarily accessible investment outlooks and flexible software to be used for investment and development planning for on-, off- and mini-grid electricity access. The GEP is being developed, updated and used in an open and transparent way leading to several disruptive co-benefits:
+The GEP is a portal for electrification investment data, analysis and research. The project output is primarily accessible investment outlooks and flexible software to be used for investment and development planning for on-, off- and mini-grid electricity access.
+The GEP is being developed, updated and used in an open and transparent way leading to several disruptive co-benefits:
+
  * By jointly developing guidelines, many disparate practitioners, practice, software and data can be aligned and streamlined.
  * By making the tools and data open, accessible and inclusive of partners (consisting of different task-groups), a community of practice will be extended.
  * By ensuring interoperability with other efforts, new data, results and methods can be incorporated. This will allow for integration with complementary efforts, following the developed standards.
