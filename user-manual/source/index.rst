@@ -1,4 +1,4 @@
-Welcome to The GEP User Manual's documentation!
+Welcome to The GEP User's Guide!
 ===============================================
 
 .. figure::  images/consortium.jpg

@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'The GEP User Manual'
+project = 'The GEP User Guide'
 copyright = '2019, KTH dESA'
 author = 'KTH dESA'
 
@@ -128,7 +128,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'TheGEPUserManual.tex', 'The GEP User Manual Documentation',
+    (master_doc, 'TheGEPUserManual.tex', 'The GEP User Guide',
      'KTH dESA', 'manual'),
 ]
 
@@ -138,7 +138,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'thegepusermanual', 'The GEP User Manual Documentation',
+    (master_doc, 'thegepusermanual', 'The GEP User Guide',
      [author], 1)
 ]
 
@@ -149,7 +149,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'TheGEPUserManual', 'The GEP User Manual Documentation',
+    (master_doc, 'TheGEPUserManual', 'The GEP User Guide',
      author, 'TheGEPUserManual', 'One line description of project.',
      'Miscellaneous'),
 ]
