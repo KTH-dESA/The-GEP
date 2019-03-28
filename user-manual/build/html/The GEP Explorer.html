@@ -96,16 +96,11 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">The GEP Explorer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#placeholder-1">Placeholder 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#placeholder-2">Placeholder 2</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#place-holder-3">Place holder 3</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#placeholder-3">Placeholder 3</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#placeholder-4">Placeholder 4</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#placeholder-5">Placeholder 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#role-and-objective">Role and Objective</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#target-audience">Target audience</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#access-gep-explorer-services">Access GEP “Explorer” services</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="The GEP Scenario Generator.html">The GEP Scenario Generator</a></li>
@@ -113,6 +108,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Interoperability.html">Interoperability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FAQ.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Contact.html">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="License.html">License</a></li>
 </ul>
 
             
@@ -179,330 +175,40 @@
             
   <div class="section" id="the-gep-explorer">
 <h1>The GEP Explorer<a class="headerlink" href="#the-gep-explorer" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="placeholder-1">
-<h2>Placeholder 1<a class="headerlink" href="#placeholder-1" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Deserunt magna ad sit duis commodo irure dolor sint qui tempor. Deserunt et sint nostrud duis voluptate irure pariatur amet anim nostrud fugiat cupidatat. Tempor ipsum nulla sunt tempor cupidatat ipsum quis ut aliqua do ut anim ullamco. Cupidatat elit quis mollit cupidatat amet labore consequat est consectetur elit sint labore exercitation. Officia fugiat commodo do ullamco et est.</li>
+<div class="section" id="role-and-objective">
+<h2>Role and Objective<a class="headerlink" href="#role-and-objective" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>GEP “Explorer”</strong> is an open access online platform that allows the user to interact with input data and electrification investment scenarios of a specific country. Inputs are reflected in a country’s Base Data (such as a map of currently electrified population, energy resource costs etc.) and outputs a set of Electrification Investment Scenarios (EIS’s). The latter explicitly presents how to achieve universal electricity access in two steps – with several permutations. The first step is an outlook for a 5-year investment strategy. The second is ambitious full electrification by 2030. The user is able to easily move through a number of scenario permutations to meet these two steps. The GEP “Explorer” is then rendering maps and results of the least-cost mix of off-, on- and mini-grid investments. Both are described in a little more detail below.</p>
+<p>In the Base Data section of the <strong>GEP “Explorer”</strong> the user finds ‘easy to navigate’ maps that illustrate the country’s electrification status quo (as well as data used to derive the electrification investment scenarios). In the form of “layers” these maps have been used in the electrification analysis of the annual GEP investment runs - but may also include other layers.</p>
+<p>In the GEP “Explorer’s” Electrification Investment Scenario (EIS) section, the user can explore the results of pre-run and regularly updated electrification scenarios. These are derived from the annual GEP update. It is important to highlight that the user is not limited to the electrification investment maps generated within this project.</p>
+<div class="section" id="target-audience">
+<h3>Target audience<a class="headerlink" href="#target-audience" title="Permalink to this headline">¶</a></h3>
+<p>The GEP “Explorer” can provide services for:</p>
+<ol class="arabic simple">
+<li><dl class="first docutils">
+<dt>Rapid engagement with:</dt>
+<dd><ul class="first last">
+<li>Internal WBG country briefing / Education (BBLs outreach to country officers)</li>
+<li>High-level counterparts, consultants, financiers, partners, IGOs etc.</li>
+<li>Providing investment outlook info for regular processes. Possible examples include the IEA WEO, WBG GTF, WBG SEAR, UN-HLPF, EMP-Africa, EMP-Asia Pacific etc.</li>
 </ul>
-<table border="1" class="docutils">
-<colgroup>
-<col width="3%" />
-<col width="21%" />
-<col width="13%" />
-<col width="63%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">#</th>
-<th class="head">Dataset</th>
-<th class="head">Type</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>1</td>
-<td>Population density &amp;
-distribution</td>
-<td>Raster</td>
-<td>Spatial identification and
-quantification of the current (base year) population. This dataset sets the
-basis of the ONSSET analysis as it is directly connected with the electricity
-demand and the assignment of energy access goals.</td>
-</tr>
-<tr class="row-odd"><td>2</td>
-<td>Administrative boundaries</td>
-<td>Raster</td>
-<td>Includes information (e.g. name) of the country(s) to be modelled and
-delineates the boundaries of the analysis.</td>
-</tr>
-<tr class="row-even"><td>3</td>
-<td>Existing grid network</td>
-<td>Line shapefile</td>
-<td>Used to identify and spatially calibrate the currently
-electrified/non-electrified population.</td>
-</tr>
-<tr class="row-odd"><td>4</td>
-<td>Substations</td>
-<td>Point shapefile</td>
-<td>Current Substation infrastructure used to identify
-and spatially calibrate the currently electrified/non-electrified
-population. It is also used in order to specify grid extension suitability.</td>
-</tr>
-<tr class="row-even"><td>5</td>
-<td>Power plants</td>
-<td>Point shapefile</td>
-<td>Current/Future power plant infrastructure
-used
-to,identify and spatially calibrate the
-currently electrified/non-electrified population. It is also used in order to
-specify grid extension suitability.</td>
-</tr>
-<tr class="row-odd"><td>6</td>
-<td>Mines &amp; Queries</td>
-<td>Point shapefile</td>
-<td>Being very important in
-electrification processes, mines are usually used
-in order to specify grid extension suitability.</td>
-</tr>
-<tr class="row-even"><td>7</td>
-<td>Roads</td>
-<td>Line shapefile</td>
-<td>Current Road infrastructure
-used
-to,identify and spatially calibrate the
-currently electrified/non-electrified population. It is also used in order to
-specify grid extension suitability.</td>
-</tr>
-<tr class="row-odd"><td>8</td>
-<td>Planned grid network</td>
-<td>Point shapefile</td>
-<td>Represents the future plans for the
-extension of the national electric grid. It also includes extension to
-current/future substations, power plants, mines and queries.</td>
-</tr>
-<tr class="row-even"><td>9</td>
-<td>Nighttime lights</td>
-<td>Raster</td>
-<td>Dataset used to,identify and spatially calibrate the
-currently electrified/non-electrified population.</td>
-</tr>
-<tr class="row-odd"><td>10</td>
-<td>GHI</td>
-<td>Raster</td>
-<td>Provide information
-about
-the Global Horizontal Irradiation (kWh/m2/year)
-over an area. This is later used to identify the availability/suitability of
-Photovoltaic systems.</td>
-</tr>
-<tr class="row-even"><td>11</td>
-<td>Wind speed</td>
-<td>Raster</td>
-<td>Provide information
-about
-the wind velocity (m/sec) over an area. This is later used to identify the
-availability/suitability of wind power (using Capacity factors).</td>
-</tr>
-<tr class="row-odd"><td>12</td>
-<td>Hydro power potential</td>
-<td>Point shapefile</td>
-<td>Points showing potential mini/small
-hydropower potential. Dataset developed by KTH dESA
-including environmental, social and topological restrictions
-and provides
-power availability in each identified point. Other sources can be used but
-should also provide such information to reassure the proper model function.</td>
-</tr>
-<tr class="row-even"><td>13</td>
-<td>Travel time</td>
-<td>Raster</td>
-<td>Visualizes spatially the travel
-time required to reach from any individual cell to the closest town with
-population more than 50,000 people.</td>
-</tr>
-<tr class="row-odd"><td>14</td>
-<td>Elevation Map</td>
-<td>Raster</td>
-<td>Filled DEM maps are use in a number
-of processes
-in
-the analysis (Energy potentials, restriction zones, grid extension suitability
-map etc.).</td>
-</tr>
-<tr class="row-even"><td>15</td>
-<td>Slope</td>
-<td>Raster</td>
-<td>A sub product of DEM, used in
-forming restriction zones and to specify grid extension suitability.</td>
-</tr>
-<tr class="row-odd"><td>16</td>
-<td>Land Cover</td>
-<td>Raster</td>
-<td>Land cover maps are use in a number
-of processes
-in
-the analysis (Energy potentials, restriction zones, grid extension suitability
-map etc.).</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="placeholder-2">
-<h2>Placeholder 2<a class="headerlink" href="#placeholder-2" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="place-holder-3">
-<h3>Place holder 3<a class="headerlink" href="#place-holder-3" title="Permalink to this headline">¶</a></h3>
-<p><strong>The GEP Explorer</strong> deserunt magna ad sit duis commodo irure dolor sint qui tempor. Deserunt et sint nostrud duis voluptate irure pariatur amet anim nostrud fugiat cupidatat. Tempor ipsum nulla sunt tempor cupidatat ipsum quis ut aliqua do ut anim ullamco. Cupidatat elit quis mollit cupidatat amet labore consequat est consectetur elit sint labore exercitation. Officia fugiat commodo do ullamco et est.’</p>
-<p><a class="reference external" href="http://www.koalastothemax.com/">This site</a> deserunt magna ad sit duis commodo irure dolor sint qui tempor. Deserunt et sint nostrud duis voluptate irure pariatur amet anim nostrud fugiat cupidatat.</p>
-</div>
-<div class="section" id="placeholder-3">
-<h3>Placeholder 3<a class="headerlink" href="#placeholder-3" title="Permalink to this headline">¶</a></h3>
-<table border="1" class="docutils">
-<colgroup>
-<col width="15%" />
-<col width="11%" />
-<col width="74%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Source</th>
-<th class="head">Type</th>
-<th class="head">Link</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>Penn</td>
-<td>World per region</td>
-<td><a class="reference external" href="http://guides.library.upenn.edu/content.php?pid=324392&amp;sid=2655131">http://guides.library.upenn.edu/content.php?pid=324392&amp;sid=2655131</a></td>
-</tr>
-<tr class="row-odd"><td>MIT</td>
-<td>World per region</td>
-<td><a class="reference external" href="http://libguides.mit.edu/c.php?g=176295&amp;p=1161383">http://libguides.mit.edu/c.php?g=176295&amp;p=1161383</a></td>
-</tr>
-<tr class="row-even"><td>EDEnextdata</td>
-<td>World per region</td>
-<td><a class="reference external" href="https://www.edenextdata.com/?q=content/global-gis-datasets-links-0#Population%20Infrastructure%20Topography%20and%20Administration%20Data">https://www.edenextdata.com/?q=content/global-gis-datasets-links-0#Population%20Infrastructure%20Topography%20and%20Administration%20Data</a></td>
-</tr>
-<tr class="row-odd"><td>Stanford</td>
-<td>World per region</td>
-<td><a class="reference external" href="https://lib.stanford.edu/GIS/data">https://lib.stanford.edu/GIS/data</a></td>
-</tr>
-<tr class="row-even"><td>GIS Lounge</td>
-<td>Finding GIS data</td>
-<td><a class="reference external" href="http://www.gislounge.com/data-and-gis-resources/">http://www.gislounge.com/data-and-gis-resources/</a></td>
-</tr>
-<tr class="row-odd"><td>World Countries</td>
-<td>Different countries</td>
-<td><a class="reference external" href="http://www.gislounge.com/data-and-gis-resources/">http://www.gislounge.com/data-and-gis-resources/</a></td>
-</tr>
-<tr class="row-even"><td>dragons8mycat</td>
-<td>Different countries</td>
-<td><a class="reference external" href="https://dragons8mycat.wordpress.com/gis-data-sources/">https://dragons8mycat.wordpress.com/gis-data-sources/</a></td>
-</tr>
-<tr class="row-odd"><td>rtwilson</td>
-<td>Different types</td>
-<td><a class="reference external" href="http://freegisdata.rtwilson.com/">http://freegisdata.rtwilson.com/</a></td>
-</tr>
-<tr class="row-even"><td>Planet OSM</td>
-<td>Different types</td>
-<td><a class="reference external" href="http://planet.osm.org/">http://planet.osm.org/</a></td>
-</tr>
-<tr class="row-odd"><td>Berkeley</td>
-<td>Different types</td>
-<td><a class="reference external" href="http://gif.berkeley.edu/resources/data_subject.html">http://gif.berkeley.edu/resources/data_subject.html</a></td>
-</tr>
-<tr class="row-even"><td>Kings College</td>
-<td>Different types</td>
-<td><a class="reference external" href="http://www.policysupport.org/waterworld">http://www.policysupport.org/waterworld</a></td>
-</tr>
-<tr class="row-odd"><td>CSRC</td>
-<td>Different types</td>
-<td><a class="reference external" href="http://rslab.sr.unh.edu/gdatalinks.html">http://rslab.sr.unh.edu/gdatalinks.html</a></td>
-</tr>
-<tr class="row-even"><td>Data Discovery Center</td>
-<td>Different types</td>
-<td><a class="reference external" href="http://ddc.unh.edu/">http://ddc.unh.edu/</a></td>
-</tr>
-<tr class="row-odd"><td>Spatial Hydrology</td>
-<td>Different types</td>
-<td><a class="reference external" href="http://www.spatialhydrology.com/datawarehouse.html">http://www.spatialhydrology.com/datawarehouse.html</a></td>
-</tr>
-<tr class="row-even"><td>Africa Information Highway</td>
-<td>Different types</td>
-<td><a class="reference external" href="http://dataportal.opendataforafrica.org/">http://dataportal.opendataforafrica.org/</a></td>
-</tr>
-</tbody>
-</table>
-<div class="section" id="placeholder-4">
-<h4>Placeholder 4<a class="headerlink" href="#placeholder-4" title="Permalink to this headline">¶</a></h4>
-<table border="1" class="docutils">
-<colgroup>
-<col width="14%" />
-<col width="13%" />
-<col width="29%" />
-<col width="5%" />
-<col width="13%" />
-<col width="26%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Coverage</th>
-<th class="head">Type</th>
-<th class="head">Resolution</th>
-<th class="head">Year</th>
-<th class="head">Source</th>
-<th class="head">Link</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>World</td>
-<td>Coast Lines, oceans</td>
-<td>Physical vectors, ESRI shapefiles, GeoTIFF (1:10, 1:50 and 1:110 m)</td>
-<td>2015</td>
-<td>Natural Earth</td>
-<td><a class="reference external" href="http://www.naturalearthdata.com/downloads/">http://www.naturalearthdata.com/downloads/</a></td>
-</tr>
-<tr class="row-odd"><td>World</td>
-<td>Climate data</td>
-<td>30 arc seconds and 2.5/5/10 arc minutes</td>
-<td>na</td>
-<td>WorldClim</td>
-<td><a class="reference external" href="http://www.worldclim.org/">http://www.worldclim.org/</a></td>
-</tr>
-<tr class="row-even"><td>World/USA</td>
-<td>Climate change scenarios</td>
-<td>various</td>
-<td>na</td>
-<td>na</td>
-<td><a class="reference external" href="https://gisclimatechange.ucar.edu/">https://gisclimatechange.ucar.edu/</a></td>
-</tr>
-<tr class="row-odd"><td>World/Australia</td>
-<td>Water and Landscape Dynamics</td>
-<td>0.05 to 1 degrees</td>
-<td>1979-2012</td>
-<td>Australian National University</td>
-<td><a class="reference external" href="http://www.wenfo.org/wald/data-software/">http://www.wenfo.org/wald/data-software/</a></td>
-</tr>
-<tr class="row-even"><td>Open Street Map (OSM) - Osmosis</td>
-<td>osm.pbf</td>
-<td>depending on mirror source</td>
-<td>up to date</td>
-<td>NOAA</td>
-<td><a class="reference external" href="http://ngdc.noaa.gov/eog/dmsp/downloadV4composites.html">http://ngdc.noaa.gov/eog/dmsp/downloadV4composites.html</a></td>
-</tr>
-<tr class="row-odd"><td>Nighttime lights</td>
-<td>Raster file</td>
-<td>0.0083 degrees</td>
-<td>1992-2013</td>
-<td>na</td>
-<td><a class="reference external" href="https://www.ngdc.noaa.gov/eog/dmsp/downloadV4composites.html">https://www.ngdc.noaa.gov/eog/dmsp/downloadV4composites.html</a></td>
-</tr>
-<tr class="row-even"><td>Africa information Highway</td>
-<td>various</td>
-<td>vectors</td>
-<td>various</td>
-<td>AfDB</td>
-<td><a class="reference external" href="http://dataportal.opendataforafrica.org/">http://dataportal.opendataforafrica.org/</a></td>
-</tr>
-<tr class="row-odd"><td>World</td>
-<td>Cliamte data</td>
-<td>various</td>
-<td>various</td>
-<td>Oregon State University</td>
-<td><a class="reference external" href="http://globalclimatedata.org/">http://globalclimatedata.org/</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="placeholder-5">
-<h4>Placeholder 5<a class="headerlink" href="#placeholder-5" title="Permalink to this headline">¶</a></h4>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<ul class="last simple">
-<li>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</li>
-<li>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.</li>
-<li>Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi.</li>
-<li>Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis.</li>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Consolidating electrification base data and electrification investment scenarios for easy browsing, including the visualization of:</dt>
+<dd><ul class="first last">
+<li>GIS layers used in the GEP scenarios as well additional layers related to electrification</li>
+<li>Pre-cooked electrification investment scenarios / External electrification studies (tool independent) following internal QA/QC</li>
 </ul>
+</dd>
+</dl>
+</li>
+</ol>
 </div>
 </div>
-</div>
+<div class="section" id="access-gep-explorer-services">
+<h2>Access GEP “Explorer” services<a class="headerlink" href="#access-gep-explorer-services" title="Permalink to this headline">¶</a></h2>
+<p>A pilot version of <strong>The GEP “Explorer”</strong> is available <a class="reference external" href="http://gep-explorer.surge.sh/">here.</a></p>
 </div>
 </div>
 

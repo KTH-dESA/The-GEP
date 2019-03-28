@@ -99,8 +99,13 @@
 <li class="toctree-l1"><a class="reference internal" href="The GEP Scenario Generator.html">The GEP Scenario Generator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="The GEP Toolbox.html">The GEP Toolbox</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Interoperability</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#placeholder-1">Placeholder 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#placeholder-2">Placeholder 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-guidelines">Data guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modelling-processes-guidelines">Modelling processes guidelines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#eis-development-pipeline">EIS development pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-and-ingesting-eis-data-on-gep-explorer-locally">Setting up and Ingesting EIS data on GEP “Explorer” (locally)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#updating-process-guidelines">Updating process guidelines</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="FAQ.html">FAQ</a></li>
@@ -172,13 +177,45 @@
             
   <div class="section" id="interoperability">
 <h1>Interoperability<a class="headerlink" href="#interoperability" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="placeholder-1">
-<h2>Placeholder 1<a class="headerlink" href="#placeholder-1" title="Permalink to this headline">¶</a></h2>
+<p>The GEP is expected to be a part of a continuous ‘data discovery’ process. That process will – in partnership – discover and develop new data via remote sensing, machine learning, development of new theory and modelling. New data will be compiled, processed in models and new information produced during the operation of the GEP. To ensure that this data can easily be shared, standards for its form and description, as well as GEP data ‘handling protocols’ have been developed and hereafter suggested.</p>
+<div class="section" id="data-guidelines">
+<h2>Data guidelines<a class="headerlink" href="#data-guidelines" title="Permalink to this headline">¶</a></h2>
 <p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis.</p>
 </div>
-<div class="section" id="placeholder-2">
-<h2>Placeholder 2<a class="headerlink" href="#placeholder-2" title="Permalink to this headline">¶</a></h2>
-<p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis.</p>
+<div class="section" id="modelling-processes-guidelines">
+<h2>Modelling processes guidelines<a class="headerlink" href="#modelling-processes-guidelines" title="Permalink to this headline">¶</a></h2>
+<p>The GEP is being designed with interoperability in mind, such that it can ship inputs to and receive outputs from a wide array of models. For reasons of transparency, repeatability, and auditability at least one set of model results by country will be developed using the Open Source Spatial Electrification Tool (OnSSET.org). To meet in-country demands, advances will be made in the OnSSET.org model itself. However, as OnSSET.org is an open source project – contributions from outside the GEP working team to its development are welcomed.</p>
+<p>The following paragraphs provide a brief overview of the modelling guidelines that can be use to replicate and update the Electrification Investment Scenarios available in <strong>GEP “Explorer”</strong>.</p>
+<div class="section" id="eis-development-pipeline">
+<h3>EIS development pipeline<a class="headerlink" href="#eis-development-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>The KTH team has developed a methodology to generate the scenarios using the standards established as part of the Global Electrification Platform (GEP).  The following document describes the steps and methodologies used in order to create scenarios in line with what has been done in the GEP.</p>
+<p><strong>1. Collection of datasets</strong></p>
+<p>The KTH-team has put down a list of datasets that are either crucial or helpful during the analysis. A list compiling all the datasets are available here in the GIS input data section and here.
+The list includes the crucial datasets as well as the optional datasets. The KTH-team has indicated the datasets available and used for the Malawi case study.</p>
+<p><strong>2. Creation of population clusters</strong></p>
+<p>After collecting the datasets, the clusters are created. The clusters are population clusters and therefore dependent on the population dataset that is available. The KTH-team has developed two methodologies for this process. The methodologies are described in depth here.</p>
+<p><strong>3. GIS processing</strong></p>
+<p>The collected datasets are processed in a GIS-interface. QGIS is the recommended software to use as the KTH team has prepared a plugin for QGIS available here. Instruction for how to run the plugin can be found here.</p>
+<p>The extraction code will generate a csv file used as input for the OnSSET model. The current version of the extraction code (as of February) creates 24 columns. However, in order to run the OnSSET algorithm a number of additional columns have to be added. The columns needed are all included here. The green rows represent data that are generated directly from the plugin, the other columns have to be generated manually by the user.</p>
+<p><strong>4. Creating the specs-file</strong></p>
+<p>OnSSET takes two input files; the GIS extracted file described above and a specs-file. The data included in the specs-file is described here.</p>
+<p><strong>5. Calibration of input files</strong></p>
+<p>OnSSET includes an embedded calibration algorithm that is used if and when a calibration is needed for the model to fit reality. More information on the calibration process is available here.</p>
+<p><strong>6. Define levers</strong></p>
+<p>Define the values for the different levers that you would like to use for your scenarios. Documentation on the different levers is available here and here.</p>
+<p><strong>7. Run and analyze scenarios</strong></p>
+<p>The GEP is currently using a modified version of OnSSET 2018 release available here. This model yields 144 EISs. Documentation on what is included in the output file can be found here.</p>
+</div>
+<div class="section" id="setting-up-and-ingesting-eis-data-on-gep-explorer-locally">
+<h3>Setting up and Ingesting EIS data on GEP “Explorer” (locally)<a class="headerlink" href="#setting-up-and-ingesting-eis-data-on-gep-explorer-locally" title="Permalink to this headline">¶</a></h3>
+<p>Information is available <a class="reference external" href="http://devseed.com/gep-docs/">here.</a></p>
+</div>
+</div>
+<div class="section" id="updating-process-guidelines">
+<h2>Updating process guidelines<a class="headerlink" href="#updating-process-guidelines" title="Permalink to this headline">¶</a></h2>
+<p>The annual suite of Electrification Investment Scenarios (EIS’s) will include a set of least cost investment scenarios for each target country. The scenarios will be defined by different levels of desired use, the expected costs of technology, and other ‘levers’ etc. These updates will reflect advances in: algorithms and models; improvements in data input; as well as increased scenarios defined by increasingly relevant and available ‘levers’.</p>
+<p>In addition, every year an updated version of GEP “Explorer” and GEP “Scenario Generator” will be released. A process will be set up for active updating of these with outreach to partners such that the latest available modelling, data and analysis is both used and compatible with the GEP.  Similarly, each year, advances in standards and updated teaching material will be released.</p>
+<p>The first pre-release of the GEP2018 is planned for the <em>Optimus Community Summer School</em> in June 2019. Successive releases of the GEP will be made in the last quarter of each year. Calls for input to the GEP will be made and received by August each year.</p>
 </div>
 </div>
 

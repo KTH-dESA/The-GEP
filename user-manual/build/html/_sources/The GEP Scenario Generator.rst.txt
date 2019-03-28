@@ -1,34 +1,28 @@
 The GEP Scenario Generator
-======================
+==================================
 
-Placeholder 1
-**********************
+Role and Objective
+************************************
 
-**Placeholder**
+Training and outreach are key components of the GEP. The **GEP “Scenario Generator”** provides policy analysts with a tool to generate new electrification scenarios using an interactive interface. The **GEP “Scenario Generator”** is based on a snapshot of the Open Source Spatial Electrification Tool (`OnSSET.org <http://www.onsset.org/>`_). Here, analysts are able replicate the GEP electrification investment scenarios available in the **GEP “Explorer”**. They can also develop their own scenarios – and visualize them independently. This allows the analysts to build custom scenarios that better match local specificities or specific policy measures i.e. borrowing options, technology purchases, formulating concession programs, and subsidies.
 
-Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis.
+The **GEP “Scenario Generator”** can be ran locally on the user’s computer. Furthermore, integration into Google Earth Engine is currently being explored at various levels. As a starting point, input, intermediate, and result data that are compatible with the developed data guidelines – and will be “upload-able” into Earth Engine. This action will result in high levels of interoperability, ultimately allowing potentially fluid integration with other electrification models. That will help ensure that users and practitioners will be free to contribute to the GEP without lock-in to a particular model.
 
-**Placeholder**
-Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis.
+The **GEP “Scenario Generator”** will allow for the provision of specific key services:
 
-Placeholder 2
-********************************
+1. Capacity building activities:
+    a. Integrated into annual trainings: ICTP Global Summer School / Energy Modelling Platform(s) to provide a basic introduction to geo-spatial electrification training.
+    b. Implemented in training and outreach with analysts in-country as part of new and ongoing electrification projects
+    c. Become one of several key components in the OpTIMUS.community global Micro-Masters
 
-1. Download **Placeholder** `here <http://www.koalastothemax.com/>`_ and install.
+2. Driver of development:
+    a. Being cost-free enables both WBG or other projects to develop first order electrification plans (and EIS’s) rapidly at a drastically reduced cost.
+    b. Providing counter-parts with the ability to move beyond pre-cooked results provided in the GEP “Explorer” to more nuanced scenarios. Scenarios that are flexible to conditional national constraints for goals: developing detailed policy, engaging with financiers, exploring technology deployment and market potentials etc.
+    c. Provide a tool that key partners such as UNDP, UNDESA, IAEA, GIZ and others can use for detailed country engagement.
 
-* Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.
+Access GEP "Scenario Generator" services
+*********************************************
 
-* Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui.
-
-* Donec non enim in turpis pulvinar facilisis.
-
-2. Download **Placeholder** `here <http://www.koalastothemax.com/>`_ and install.
-
-* Donec eu libero sit amet quam egestas semper.
-
-Additional info
-************************
-*   Donec eu libero sit amet quam egestas semper. `here <http://www.koalastothemax.com/>`_.
-
+A pilot version of **The GEP "Scenario Generator"** is available `here. <http://www.onsset.org/online-tool.html>`_
 
 

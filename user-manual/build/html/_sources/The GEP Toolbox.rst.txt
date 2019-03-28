@@ -1,16 +1,36 @@
 The GEP Toolbox
 =================================
 
-Placeholder 1
-********************
+Role and Objective
+************************************
+
+The **GEP “Toolbox”** provides access to the source code of all models and tools used in the development of the electrification scenarios available on **GEP “Explorer”**. That includes:
+    * The open-source code base, with at least one active project to which it contributes.
+    * User manuals and educational material offering appropriate documentation for the use of the **GEP “Explorer”** and **GEP “Scenario Generator”**.
+
+The Open Source Spatial Electrification Tool (OnSSET)
+*********************************************************
+
+Overview
++++++++++++++++++++++++++++++++++++++++++++
 
 Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
 
-Placeholder 2
-********************
+Main functions and assumptions adopted in GEP
+++++++++++++++++++++++++++++++++++++++++++++++++
 
-Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Praesendapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus
+Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
 
+Open source code
++++++++++++++++++++++++++++++++++++++++++++
 
+Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
 
+User manual and training material
++++++++++++++++++++++++++++++++++++++++++++++++
 
+Educational material have been developed (and being frequently updated) for the GEP “Explorer” and GEP “Scenario Generator”. They will be uploaded to the Google Open Online education platform, and contribute to:
+    * Capacity building activities for in-country projects.
+    * The Annual summer schools on Modelling Tools for Sustainable Development, Trieste and the Energy Modelling Platform for Africa as well as Asia Pacific.
+    * Teaching curricula for postgraduate study such as the forthcoming OpTIMUS.community global Micro-Masters.
+    * Knowledge management efforts in development organizations as well as ministries.
