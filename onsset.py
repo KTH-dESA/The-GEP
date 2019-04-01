@@ -98,6 +98,7 @@ SET_HV_DIST_PLANNED = 'PlannedHVLineDist'
 SET_MV_DIST_CURRENT = 'CurrentMVLineDist'
 SET_MV_DIST_PLANNED = 'PlannedMVLineDist'
 SET_ELEC_POP = 'ElecPop'
+SET_ELEC_POP_CALIB = 'ElecPopCalib'
 SET_WTFtier = "ResidentialDemandTier"
 SET_TIER = 'Tier'
 SET_INVEST_PER_CAPITA = "InvestmentCapita"
@@ -851,10 +852,10 @@ class SettlementProcessor:
         self.df[SET_ROAD_DIST] = pd.to_numeric(self.df[SET_ROAD_DIST], errors='coerce')
         self.df[SET_HYDRO_DIST] = pd.to_numeric(self.df[SET_HYDRO_DIST], errors='coerce')
         self.df[SET_HYDRO] = pd.to_numeric(self.df[SET_HYDRO], errors='coerce')
-        self.df[SET_NTL_BIN] = pd.to_numeric(self.df[SET_NTL_BIN], errors='coerce')
+        # self.df[SET_NTL_BIN] = pd.to_numeric(self.df[SET_NTL_BIN], errors='coerce')
         self.df[SET_ELEC_POP] = pd.to_numeric(self.df[SET_ELEC_POP], errors='coerce')
 
-        self.df.loc[self.df[SET_NTL_BIN] > self.df['NTLArea'], SET_NTL_BIN] = self.df['NTLArea']
+        # self.df.loc[self.df[SET_NTL_BIN] > self.df['NTLArea'], SET_NTL_BIN] = self.df['NTLArea']
         self.df.loc[self.df[SET_ELEC_POP] > self.df[SET_POP], SET_ELEC_POP] = self.df[SET_POP]
 
         logging.info('Add column with country name')
@@ -1046,7 +1047,7 @@ class SettlementProcessor:
             self.df[SET_WTFtier + "{}".format(num)] = wb_tiers_all[num]
 
     def calibrate_pop_and_urban(self, pop_actual, pop_future_high, pop_future_low, urban_current, urban_future,
-                                urban_cutoff, start_year, end_year):
+                                start_year, end_year):
         """
         Calibrate the actual current population, the urban split and forecast the future population
         """
@@ -1057,7 +1058,7 @@ class SettlementProcessor:
         pop_ratio = pop_actual / self.df[SET_POP].sum()
         # And use this ratio to calibrate the population in a new column
         self.df[SET_POP_CALIB] = self.df.apply(lambda row: row[SET_POP] * pop_ratio, axis=1)
-        self.df[SET_ELEC_POP] = self.df.apply(lambda row: row[SET_ELEC_POP] * pop_ratio, axis=1)
+        self.df[SET_ELEC_POP_CALIB] = self.df[SET_ELEC_POP] * pop_ratio
         if max(self.df[SET_URBAN]) == 2:
             calibrate = True if 'n' in input(
                 'Use urban definition from GIS layer <y/n> (n=model calibration):') else False
@@ -1079,14 +1080,14 @@ class SettlementProcessor:
                     factor *= 1.1
                 else:
                     factor *= 0.9
-                # print(urban_modelled, factor)
 
         # Get the calculated urban ratio, and limit it to within reasonable boundaries
         pop_urb = self.df.loc[self.df[SET_URBAN] > 1, SET_POP_CALIB].sum()
         urban_modelled = pop_urb / pop_actual
 
-        print('The modelled urban ratio is {:.2f}. '
-              'In case this is not acceptable please revise this part of the code'.format(urban_modelled))
+        if abs(urban_modelled - urban_current) > 0.01:
+            print('The modelled urban ratio is {:.2f}. '
+                  'In case this is not acceptable please revise this part of the code'.format(urban_modelled))
 
         # Project future population, with separate growth rates for urban and rural
         logging.info('Project future population')
@@ -1139,11 +1140,9 @@ class SettlementProcessor:
 
         self.df[SET_POP + "{}".format(start_year)] = self.df.apply(lambda row: row[SET_POP_CALIB], axis=1)
 
-        return urban_cutoff, urban_modelled
+        return urban_modelled
 
-    def elec_current_and_future(self, elec_actual, elec_actual_urban, elec_actual_rural, pop_cutoff, dist_to_trans,
-                                min_night_lights,
-                                max_grid_dist, max_road_dist, pop_tot, pop_cutoff2, start_year):
+    def elec_current_and_future(self, elec_actual, elec_actual_urban, elec_actual_rural, pop_tot, start_year):
         """
         Calibrate the current electrification status, and future 'pre-electrification' status
         """
@@ -1158,8 +1157,7 @@ class SettlementProcessor:
         factor = (total_pop * total_elec_ratio) / (urban_pop * urban_elec_ratio + rural_pop * rural_elec_ratio)
         urban_elec_ratio *= factor
         rural_elec_ratio *= factor
-        # self.df[SET_ELEC_POP] = self.df[SET_POP_CALIB] * self.df[SET_NTL_BIN] / self.df['NTLArea']
-        self.df.loc[self.df[SET_NTL_BIN] <= 0, [SET_ELEC_POP]] = 0
+        self.df.loc[self.df[SET_NIGHT_LIGHTS] <= 0, [SET_ELEC_POP_CALIB]] = 0
 
         logging.info('Calibrate current electrification')
         self.df[SET_ELEC_CURRENT] = 0
@@ -1176,7 +1174,7 @@ class SettlementProcessor:
             priority = 2
 
         condition = 0
-        # priority = 2
+
         while condition == 0:
             # Assign the 1 (electrified)/0 (un-electrified) values to each cell
             urban_electrified = urban_pop * urban_elec_ratio
@@ -1186,29 +1184,72 @@ class SettlementProcessor:
                 print(
                     'We have identified the existence of transformers or MV lines as input data; therefore we proceed using those for the calibration')
                 self.df.loc[(self.df[SET_CALIB_GRID_DIST] < 2) & (self.df[SET_NIGHT_LIGHTS] > 0) & (
-                        self.df[SET_POP_CALIB] > 500), SET_ELEC_CURRENT] = 1  # REVIEW 500 vs 300
+                        self.df[SET_POP_CALIB] > 50), SET_ELEC_CURRENT] = 1  # REVIEW 500 vs 300
                 urban_elec_modelled = self.df.loc[
-                    (self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] > 1), SET_ELEC_POP].sum()
+                    (self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] > 1), SET_ELEC_POP_CALIB].sum()
                 rural_elec_modelled = self.df.loc[
-                    (self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] <= 1), SET_ELEC_POP].sum()
+                    (self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] <= 1), SET_ELEC_POP_CALIB].sum()
                 urban_elec_factor = urban_elec_modelled / urban_electrified
                 rural_elec_factor = rural_elec_modelled / rural_electrified
                 if urban_elec_factor > 1:
-                    self.df.loc[(self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] > 1), SET_ELEC_POP] *= (
+                    self.df.loc[(self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] > 1), SET_ELEC_POP_CALIB] *= (
                             1 / urban_elec_factor)
                 else:
-                    print(
-                        "The urban settlements identified as electrified are lower than in statistics; Please re-adjust the calibration conditions")
+                    i = 0
+                    print("The urban settlements identified as electrified are lower than in statistics; Please re-adjust the calibration conditions")
+                    while urban_elec_factor <= 1:
+                        if i < 10:
+                            self.df.loc[(self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] == 2), SET_ELEC_POP_CALIB] *= 1.1
+                            self.df[SET_ELEC_POP_CALIB] = np.minimum(self.df[SET_ELEC_POP_CALIB], self.df[SET_POP_CALIB])
+                            urban_elec_modelled = self.df.loc[(self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] == 2), SET_ELEC_POP_CALIB].sum()
+                            urban_elec_factor = urban_elec_modelled / urban_electrified
+                            i += 1
+                        else:
+                            break
 
                 if rural_elec_factor > 1:
-                    self.df.loc[(self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] <= 1), SET_ELEC_POP] *= (
+                    self.df.loc[(self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] <= 1), SET_ELEC_POP_CALIB] *= (
                             1 / rural_elec_factor)
                 else:
-                    print(
-                        "The rural settlements identified as electrified are lower than in statistics; Please re-adjust the calibration conditions")
+                    i = 0
+                    print("The rural settlements identified as electrified are lower than in statistics; Please re-adjust the calibration conditions")
+                    while rural_elec_factor <= 1:
+                        if i < 10:
+                            self.df.loc[(self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] < 2), SET_ELEC_POP_CALIB] *= 1.1
+                            self.df[SET_ELEC_POP_CALIB] = np.minimum(self.df[SET_ELEC_POP_CALIB], self.df[SET_POP_CALIB])
+                            rural_elec_modelled = self.df.loc[(self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] < 2), SET_ELEC_POP_CALIB].sum()
+                            rural_elec_factor = rural_elec_modelled / rural_electrified
+                            i += 1
+                        else:
+                            break
 
-                pop_elec = self.df.loc[self.df[SET_ELEC_CURRENT] == 1, SET_ELEC_POP].sum()
+                pop_elec = self.df.loc[self.df[SET_ELEC_CURRENT] == 1, SET_ELEC_POP_CALIB].sum()
                 elec_modelled = pop_elec / pop_tot
+
+                # REVIEW. Added new calibration step for pop not meeting original steps, if prev elec pop is too small
+                i = 0
+                td_dist_2 = 0.1
+                while elec_actual - elec_modelled > 0.01:
+                    if i < 50:
+                        pop_elec_2 = self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > 25) &
+                                                 (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_POP_CALIB].sum()
+                        if (pop_elec + pop_elec_2) / pop_tot > elec_actual:
+                            elec_modelled = (pop_elec + pop_elec_2) / pop_tot
+                            self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > 25) &
+                                        (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_CURRENT] = 1
+                            self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > 25) &
+                                        (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_POP_CALIB] = self.df[SET_POP_CALIB]
+                        else:
+                            i += 1
+                            td_dist_2 += 0.1
+                    else:
+                        self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > 25) &
+                                    (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_CURRENT] = 1
+                        self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > 25) &
+                                    (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_POP_CALIB] = self.df[
+                            SET_POP_CALIB]
+                        elec_modelled = (pop_elec + pop_elec_2) / pop_tot
+                        break
 
             # RUN_PARAM: Calibration parameters if only HV lines are available
             else:
@@ -1218,32 +1259,32 @@ class SettlementProcessor:
                         self.df[SET_POP_CALIB] > 300), SET_ELEC_CURRENT] = 1
 
                 urban_elec_modelled = self.df.loc[
-                    (self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] > 1), SET_ELEC_POP].sum()
+                    (self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] > 1), SET_ELEC_POP_CALIB].sum()
                 rural_elec_modelled = self.df.loc[
-                    (self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] <= 1), SET_ELEC_POP].sum()
+                    (self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] <= 1), SET_ELEC_POP_CALIB].sum()
                 urban_elec_factor = urban_elec_modelled / urban_electrified
                 rural_elec_factor = rural_elec_modelled / rural_electrified
                 if urban_elec_factor > 1:
-                    self.df.loc[(self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] > 1), SET_ELEC_POP] *= (
+                    self.df.loc[(self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] > 1), SET_ELEC_POP_CALIB] *= (
                             1 / urban_elec_factor)
                 else:
                     print(
                         "The urban settlements identified as electrified are lower than in statistics; Please re-adjust the calibration conditions")
 
                 if rural_elec_factor > 1:
-                    self.df.loc[(self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] <= 1), SET_ELEC_POP] *= (
+                    self.df.loc[(self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] <= 1), SET_ELEC_POP_CALIB] *= (
                             1 / rural_elec_factor)
                 else:
                     print(
                         "The rural settlements identified as electrified are lower than in statistics; Please re-adjust the calibration conditions")
 
-                pop_elec = self.df.loc[self.df[SET_ELEC_CURRENT] == 1, SET_ELEC_POP].sum()
+                pop_elec = self.df.loc[self.df[SET_ELEC_CURRENT] == 1, SET_ELEC_POP_CALIB].sum()
                 elec_modelled = pop_elec / pop_tot
 
             urban_elec_ratio = self.df.loc[(self.df[SET_ELEC_CURRENT] == 1) & (
-                    self.df[SET_URBAN] > 1), SET_ELEC_POP].sum() / urban_pop
+                    self.df[SET_URBAN] > 1), SET_ELEC_POP_CALIB].sum() / urban_pop
             rural_elec_ratio = self.df.loc[(self.df[SET_ELEC_CURRENT] == 1) & (
-                    self.df[SET_URBAN] <= 1), SET_ELEC_POP].sum() / rural_pop
+                    self.df[SET_URBAN] <= 1), SET_ELEC_POP_CALIB].sum() / rural_pop
 
             print('The modelled electrification rate achieved is {0:.2f}.'
                   'Urban elec. rate is {1:.2f} and Rural elec. rate is {2:.2f}. \n'
@@ -1261,7 +1302,7 @@ class SettlementProcessor:
         self.df[SET_ELEC_FINAL_CODE + "{}".format(start_year)] = \
             self.df.apply(lambda row: 1 if row[SET_ELEC_CURRENT] == 1 else 99, axis=1)
 
-        return min_night_lights, dist_to_trans, max_grid_dist, max_road_dist, elec_modelled, pop_cutoff, pop_cutoff2, rural_elec_ratio, urban_elec_ratio
+        return elec_modelled, rural_elec_ratio, urban_elec_ratio
 
     @staticmethod
     def separate_elec_status(elec_status):
@@ -1847,7 +1888,7 @@ class SettlementProcessor:
             # Assign new connections to those that are already electrified to a certain percent
             self.df.loc[(self.df[SET_ELEC_FUTURE_ACTUAL + "{}".format(
                 year - time_step)] == 1), SET_NEW_CONNECTIONS + "{}".format(year)] = \
-                (self.df[SET_POP + "{}".format(year)] - self.df[SET_ELEC_POP])
+                (self.df[SET_POP + "{}".format(year)] - self.df[SET_ELEC_POP_CALIB])
             # Assign new connections to those that are not currently electrified
             self.df.loc[self.df[SET_ELEC_FUTURE_ACTUAL + "{}".format(year - time_step)] == 0,
                         SET_NEW_CONNECTIONS + "{}".format(year)] = self.df[SET_POP + "{}".format(year)]
@@ -1875,7 +1916,7 @@ class SettlementProcessor:
             self.df.loc[(self.df[SET_LIMIT + "{}".format(year - time_step)] == 0) &
                         (self.df[SET_ELEC_CURRENT] == 1),
                         SET_NEW_CONNECTIONS + "{}".format(year)] = self.df[SET_POP + "{}".format(year)] - self.df[
-                SET_ELEC_POP]
+                SET_ELEC_POP_CALIB]
 
             # Assing new connections to settlements that have not been electrified
             self.df.loc[(self.df[SET_LIMIT + "{}".format(year - time_step)] == 0) & (
@@ -2437,10 +2478,10 @@ class SettlementProcessor:
                                    self.df[SET_POP + "{}".format(year)].sum()
                         if eleclimit - elecrate > 0.05:
                             min_investment += 0.5
-                        elif ((eleclimit - elecrate) > 0) and ((eleclimit - elecrate) <= 0.05) and (iter_limit_1 != 50):
+                        elif ((eleclimit - elecrate) > 0) and ((eleclimit - elecrate) <= 0.05) and (iter_limit_1 != 100):
                             min_dist_to_cities += 0.5
                             iter_limit_1 += 1
-                        elif ((eleclimit - elecrate) < 0) and ((eleclimit - elecrate) > -0.05) and (iter_limit_2 != 50):
+                        elif ((eleclimit - elecrate) < 0) and ((eleclimit - elecrate) > -0.05) and (iter_limit_2 != 100):
                             if min_dist_to_cities > 0:
                                 min_dist_to_cities -= 0.5
                                 iter_limit_2 += 1
@@ -2914,7 +2955,7 @@ class SettlementProcessor:
             else:
                 return 0
 
-        logging.info('Calculate LV investment cost')
+        #logging.info('Calculate LV investment cost')
 
         # self.df['InvestmentCostLV' + "{}".format(year)] = self.df.apply(res_investment_cost_lv, axis=1)
 
@@ -2937,7 +2978,7 @@ class SettlementProcessor:
             else:
                 return 0
 
-        logging.info('Calculate MV investment cost')
+        # logging.info('Calculate MV investment cost')
 
         # self.df['InvestmentCostMV' + "{}".format(year)] = self.df.apply(res_investment_cost_mv, axis=1)
 
@@ -2960,7 +3001,7 @@ class SettlementProcessor:
             else:
                 return 0
 
-        logging.info('Calculate HV investment cost')
+        # logging.info('Calculate HV investment cost')
 
         # self.df['InvestmentCostHV' + "{}".format(year)] = self.df.apply(res_investment_cost_hv, axis=1)
 
@@ -2983,7 +3024,7 @@ class SettlementProcessor:
             else:
                 return 0
 
-        logging.info('Calculate transformer investment cost')
+        # logging.info('Calculate transformer investment cost')
 
         # self.df['InvestmentCostTransformer' + "{}".format(year)] = self.df.apply(res_investment_cost_transformer, axis=1)
 
@@ -3006,7 +3047,7 @@ class SettlementProcessor:
             else:
                 return 0
 
-        logging.info('Calculate connection investment cost')
+        # logging.info('Calculate connection investment cost')
 
         #  self.df['InvestmentCostConnection' + "{}".format(year)] = self.df.apply(res_investment_cost_connection, axis=1)
 
@@ -3020,7 +3061,7 @@ class SettlementProcessor:
             else:
                 return 0
 
-        logging.info('Calculating average infrastructure cost for grid connection')
+        # logging.info('Calculating average infrastructure cost for grid connection')
         # self.df['InfrastructureCapitaCost' + "{}".format(year)] = self.df.apply(infrastructure_cost, axis=1)
 
         # TODO this is not correct. It creates problems in certain occasions. I have excluded it from the code. In case it doesn't interfere with any additions you made I suggest deleting
