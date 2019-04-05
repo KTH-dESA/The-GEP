@@ -9,6 +9,7 @@ from math import ceil, pi, exp, log, sqrt, radians, cos, sin, asin
 # from pyproj import Proj
 import numpy as np
 from collections import defaultdict
+from IPython.display import Markdown
 
 logging.basicConfig(format='%(asctime)s\t\t%(message)s', level=logging.DEBUG)
 
@@ -59,7 +60,7 @@ SET_ELEC_FINAL_GRID = "GridElecIn"
 SET_ELEC_FINAL_OFFGRID = "OffGridElecIn"
 SET_NEW_CONNECTIONS = 'NewConnections'  # Number of new people with electricity connections
 SET_MIN_GRID_DIST = 'MinGridDist'
-SET_LCOE_GRID = 'Grid_extension'  # All lcoes in USD/kWh
+SET_LCOE_GRID = 'Grid'  # All lcoes in USD/kWh
 SET_LCOE_SA_PV = 'SA_PV'
 SET_LCOE_SA_DIESEL = 'SA_Diesel'
 SET_LCOE_MG_WIND = 'MG_Wind'
@@ -831,7 +832,7 @@ class SettlementProcessor:
         try:
             self.df = pd.read_csv(path)
         except FileNotFoundError:
-            print('You need to first split into a base directory and prep!')
+            print("Please make sure that the country name you provided and the .csv file, both have the same name")
             raise
 
     def condition_df(self, country):
@@ -1028,18 +1029,19 @@ class SettlementProcessor:
         logging.info('Calculate Wind CF')
         self.df[SET_WINDCF] = self.df.apply(get_wind_cf, axis=1)
 
-    def prepare_wtf_tier_columns(self, num_people_per_hh_rural, num_people_per_hh_urban):
+    def prepare_wtf_tier_columns(self, num_people_per_hh_rural, num_people_per_hh_urban,
+                                 tier_1, tier_2, tier_3, tier_4, tier_5):
         """ Prepares the five Residential Demand Tier Targets based customized for each country
         """
         # The MTF approach is given as per yearly household consumption (BEYOND CONNECTIONS Energy Access Redefined, ESMAP, 2015). Tiers in kWh/capita/year depends on the average ppl/hh which is different in every country
         logging.info('Populate ResidentialDemandTier columns')
         tier_num = [1, 2, 3, 4, 5]
         ppl_hh_average = (num_people_per_hh_urban + num_people_per_hh_rural) / 2
-        tier_1 = 38.7 / ppl_hh_average  # 38.7 refers to kWh/household/year. It is the mean value between Tier 1 and Tier 2
-        tier_2 = 219 / ppl_hh_average
-        tier_3 = 803 / ppl_hh_average
-        tier_4 = 2117 / ppl_hh_average
-        tier_5 = 2993 / ppl_hh_average
+        tier_1 = tier_1 / ppl_hh_average  # 38.7 refers to kWh/household/year. It is the mean value between Tier 1 and Tier 2
+        tier_2 = tier_2 / ppl_hh_average
+        tier_3 = tier_3 / ppl_hh_average
+        tier_4 = tier_4 / ppl_hh_average
+        tier_5 = tier_5 / ppl_hh_average
 
         wb_tiers_all = {1: tier_1, 2: tier_2, 3: tier_3, 4: tier_4, 5: tier_5}
 
@@ -2036,7 +2038,7 @@ class SettlementProcessor:
                           axis=1)
 
     def calculate_off_grid_lcoes(self, mg_hydro_calc, mg_wind_calc, mg_pv_calc,
-                                 sa_pv_calc, mg_diesel_calc, sa_diesel_calc, pv_diesel_hyb, hybrid_1, hybrid_2, hybrid_3, hybrid_4, hybrid_5,
+                                 sa_pv_calc, mg_diesel_calc, sa_diesel_calc, hybrid_1, hybrid_2, hybrid_3, hybrid_4, hybrid_5,
                                  year, start_year, end_year, timestep):
         """
         Calcuate the LCOEs for all off-grid technologies, and calculate the minimum, so that the electrification
@@ -2245,7 +2247,7 @@ class SettlementProcessor:
             year), SET_MIN_OFFGRID_CODE + "{}".format(year)] = codes[SET_LCOE_MG_HYBRID + "{}".format(year)]
 
     def results_columns(self, mg_hydro_calc, mg_wind_calc, mg_pv_calc, sa_pv_calc, mg_diesel_calc,
-                        sa_diesel_calc, grid_calc, pv_diesel_hyb, hybrid_1, hybrid_2, hybrid_3, hybrid_4, hybrid_5, year):
+                        sa_diesel_calc, grid_calc, hybrid_1, hybrid_2, hybrid_3, hybrid_4, hybrid_5, year):
         """
         Once the grid extension algorithm has been run, determine the minimum overall option, and calculate the
         capacity and investment requirements for each settlement
@@ -2311,7 +2313,7 @@ class SettlementProcessor:
             year), SET_MIN_OVERALL_CODE + "{}".format(year)] = codes[SET_LCOE_MG_HYBRID + "{}".format(year)]
 
     def calculate_investments(self, mg_hydro_calc, mg_wind_calc, mg_pv_calc, sa_pv_calc, mg_diesel_calc,
-                              sa_diesel_calc, grid_calc, pv_diesel_hyb, hybrid_1, hybrid_2, hybrid_3, hybrid_4, hybrid_5, year, end_year, timestep):
+                              sa_diesel_calc, grid_calc, hybrid_1, hybrid_2, hybrid_3, hybrid_4, hybrid_5, year, end_year, timestep):
         def res_investment_cost(row):
             min_code = row[SET_MIN_OVERALL_CODE + "{}".format(year)]
 
@@ -2414,27 +2416,28 @@ class SettlementProcessor:
                                           elec_loop=row[SET_ELEC_ORDER + "{}".format(year)],
                                           get_investment_cost=True)
             elif min_code == 8:
-                return pv_diesel_hyb.get_lcoe(energy_per_cell=row[SET_ENERGY_PER_CELL + "{}".format(year)],
-                                              total_energy_per_cell=row[SET_TOTAL_ENERGY_PER_CELL],
-                                              prev_code=row[SET_ELEC_FINAL_CODE + "{}".format(year - timestep)],
-                                              conf_status=row[SET_CONFLICT],
-                                              start_year=year - timestep,
-                                              end_year=end_year,
-                                              people=row[SET_POP + "{}".format(year)],
-                                              new_connections=row[SET_NEW_CONNECTIONS + "{}".format(year)],
-                                              num_people_per_hh=row[SET_NUM_PEOPLE_PER_HH],
-                                              travel_hours=row[SET_TRAVEL_HOURS],
-                                              ghi=row[SET_GHI],
-                                              urban=row[SET_URBAN],
-                                              hybrid_1=hybrid_1,
-                                              hybrid_2=hybrid_2,
-                                              hybrid_3=hybrid_3,
-                                              hybrid_4=hybrid_4,
-                                              hybrid_5=hybrid_5,
-                                              tier=row[SET_TIER],
-                                              grid_cell_area=row[SET_GRID_CELL_AREA],
-                                              mg_hybrid=True,
-                                              get_investment_cost=True)
+                pass
+                # return pv_diesel_hyb.get_lcoe(energy_per_cell=row[SET_ENERGY_PER_CELL + "{}".format(year)],
+                #                               total_energy_per_cell=row[SET_TOTAL_ENERGY_PER_CELL],
+                #                               prev_code=row[SET_ELEC_FINAL_CODE + "{}".format(year - timestep)],
+                #                               conf_status=row[SET_CONFLICT],
+                #                               start_year=year - timestep,
+                #                               end_year=end_year,
+                #                               people=row[SET_POP + "{}".format(year)],
+                #                               new_connections=row[SET_NEW_CONNECTIONS + "{}".format(year)],
+                #                               num_people_per_hh=row[SET_NUM_PEOPLE_PER_HH],
+                #                               travel_hours=row[SET_TRAVEL_HOURS],
+                #                               ghi=row[SET_GHI],
+                #                               urban=row[SET_URBAN],
+                #                               hybrid_1=hybrid_1,
+                #                               hybrid_2=hybrid_2,
+                #                               hybrid_3=hybrid_3,
+                #                               hybrid_4=hybrid_4,
+                #                               hybrid_5=hybrid_5,
+                #                               tier=row[SET_TIER],
+                #                               grid_cell_area=row[SET_GRID_CELL_AREA],
+                #                               mg_hybrid=True,
+                #                               get_investment_cost=True)
             else:
                 return 0
 
@@ -2723,7 +2726,7 @@ class SettlementProcessor:
         print("The electrification rate achieved in {} is {:.1f} %".format(year, elecrate * 100))
 
     def final_decision(self, mg_hydro_calc, mg_wind_calc, mg_pv_calc, sa_pv_calc, mg_diesel_calc,
-                       sa_diesel_calc, grid_calc, pv_diesel_hyb, hybrid_1, hybrid_2, hybrid_3, hybrid_4, hybrid_5, year, end_year, timestep):
+                       sa_diesel_calc, grid_calc, hybrid_1, hybrid_2, hybrid_3, hybrid_4, hybrid_5, year, end_year, timestep):
         """" ... """
 
         logging.info('Determine final electrification decision')
@@ -2766,31 +2769,31 @@ class SettlementProcessor:
 
         logging.info('Calculate new capacity')
 
-        self.df[SET_NEW_CAPACITY + "{}".format(year)] = self.df.apply(
-            lambda row: pv_diesel_hyb.get_lcoe(energy_per_cell=row[SET_ENERGY_PER_CELL + "{}".format(year)],
-                                               total_energy_per_cell=row[SET_TOTAL_ENERGY_PER_CELL],
-                                               prev_code=row[SET_ELEC_FINAL_CODE + "{}".format(year - timestep)],
-                                               conf_status=row[SET_CONFLICT],
-                                               start_year=year - timestep,
-                                               end_year=end_year,
-                                               people=row[SET_POP + "{}".format(year)],
-                                               new_connections=row[SET_NEW_CONNECTIONS + "{}".format(year)],
-                                               num_people_per_hh=row[SET_NUM_PEOPLE_PER_HH],
-                                               travel_hours=row[SET_TRAVEL_HOURS],
-                                               ghi=row[SET_GHI],
-                                               urban=row[SET_URBAN],
-                                               hybrid_1=hybrid_1,
-                                               hybrid_2=hybrid_2,
-                                               hybrid_3=hybrid_3,
-                                               hybrid_4=hybrid_4,
-                                               hybrid_5=hybrid_5,
-                                               tier=row[SET_TIER],
-                                               grid_cell_area=row[SET_GRID_CELL_AREA],
-                                               mg_hybrid=True,
-                                               get_capacity=True
-                                               )
-            if row[SET_ELEC_FINAL_CODE + "{}".format(year)] == 8 else 0,
-            axis=1)
+        # self.df[SET_NEW_CAPACITY + "{}".format(year)] = self.df.apply(
+        #     lambda row: pv_diesel_hyb.get_lcoe(energy_per_cell=row[SET_ENERGY_PER_CELL + "{}".format(year)],
+        #                                        total_energy_per_cell=row[SET_TOTAL_ENERGY_PER_CELL],
+        #                                        prev_code=row[SET_ELEC_FINAL_CODE + "{}".format(year - timestep)],
+        #                                        conf_status=row[SET_CONFLICT],
+        #                                        start_year=year - timestep,
+        #                                        end_year=end_year,
+        #                                        people=row[SET_POP + "{}".format(year)],
+        #                                        new_connections=row[SET_NEW_CONNECTIONS + "{}".format(year)],
+        #                                        num_people_per_hh=row[SET_NUM_PEOPLE_PER_HH],
+        #                                        travel_hours=row[SET_TRAVEL_HOURS],
+        #                                        ghi=row[SET_GHI],
+        #                                        urban=row[SET_URBAN],
+        #                                        hybrid_1=hybrid_1,
+        #                                        hybrid_2=hybrid_2,
+        #                                        hybrid_3=hybrid_3,
+        #                                        hybrid_4=hybrid_4,
+        #                                        hybrid_5=hybrid_5,
+        #                                        tier=row[SET_TIER],
+        #                                        grid_cell_area=row[SET_GRID_CELL_AREA],
+        #                                        mg_hybrid=True,
+        #                                        get_capacity=True
+        #                                        )
+        #     if row[SET_ELEC_FINAL_CODE + "{}".format(year)] == 8 else 0,
+        #     axis=1)
 
         self.df.loc[self.df[SET_ELEC_FINAL_CODE + "{}".format(year)] == 1, SET_NEW_CAPACITY + "{}".format(year)] = (
                 (self.df[SET_ENERGY_PER_CELL + "{}".format(year)]) /

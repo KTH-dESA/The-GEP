@@ -62,7 +62,15 @@ elif choice == 2:
         num_people_per_hh_rural = float(SpecsData.iloc[0][SPE_NUM_PEOPLE_PER_HH_RURAL])
         num_people_per_hh_urban = float(SpecsData.iloc[0][SPE_NUM_PEOPLE_PER_HH_URBAN])
 
-        onsseter.prepare_wtf_tier_columns(num_people_per_hh_rural, num_people_per_hh_urban)
+        # RUN_PARAM: these are the annual household electricity targets
+        tier_1 = 38.7  # 38.7 refers to kWh/household/year. It is the mean value between Tier 1 and Tier 2
+        tier_2 = 219
+        tier_3 = 803
+        tier_4 = 2117
+        tier_5 = 2993
+
+        onsseter.prepare_wtf_tier_columns(num_people_per_hh_rural, num_people_per_hh_urban,
+                                          tier_1, tier_2, tier_3, tier_4, tier_5)
         onsseter.condition_df(country)
         onsseter.grid_penalties()
         onsseter.calc_wind_cfs()
@@ -299,7 +307,7 @@ elif choice == 3:
         #                                 productive_demand)
         #
         # onsseter.calculate_off_grid_lcoes(mg_hydro_calc, mg_wind_calc, mg_pv_calc, sa_pv_calc, mg_diesel_calc,
-        #                                   sa_diesel_calc, pv_diesel_hyb, hybrid_1, hybrid_2, hybrid_3, hybrid_4,
+        #                                   sa_diesel_calc, hybrid_1, hybrid_2, hybrid_3, hybrid_4,
         #                                   hybrid_5, year, start_year, end_year, time_step)
         #
         # if year - time_step == start_year:
@@ -311,16 +319,16 @@ elif choice == 3:
         #                   grid_connect_limit, auto_intensification, prioritization)
         #
         # onsseter.results_columns(mg_hydro_calc, mg_wind_calc, mg_pv_calc, sa_pv_calc, mg_diesel_calc, sa_diesel_calc,
-        #                          pv_diesel_hyb, hybrid_1, hybrid_2, hybrid_3, hybrid_4, hybrid_5, grid_calc, year)
+        #                          hybrid_1, hybrid_2, hybrid_3, hybrid_4, hybrid_5, grid_calc, year)
         #
         # onsseter.calculate_investments(mg_hydro_calc, mg_wind_calc, mg_pv_calc, sa_pv_calc, mg_diesel_calc,
-        #                                sa_diesel_calc, grid_calc, pv_diesel_hyb, hybrid_1, hybrid_2, hybrid_3, hybrid_4,
+        #                                sa_diesel_calc, grid_calc, hybrid_1, hybrid_2, hybrid_3, hybrid_4,
         #                                hybrid_5, year, end_year, time_step)
         #
         # onsseter.apply_limitations(eleclimit, year, time_step, prioritization, auto_intensification)
         #
         # onsseter.final_decision(mg_hydro_calc, mg_wind_calc, mg_pv_calc, sa_pv_calc, mg_diesel_calc, sa_diesel_calc,
-        #                         grid_calc, pv_diesel_hyb, hybrid_1, hybrid_2, hybrid_3, hybrid_4, hybrid_5, year,
+        #                         grid_calc, hybrid_1, hybrid_2, hybrid_3, hybrid_4, hybrid_5, year,
         #                         end_year, time_step)
         #
         # onsseter.delete_redundant_columns(year)
@@ -390,7 +398,7 @@ elif choice == 3:
                                             end_year_pop, productive_demand)
 
             onsseter.calculate_off_grid_lcoes(mg_hydro_calc, mg_wind_calc, mg_pv_calc, sa_pv_calc, mg_diesel_calc,
-                                              sa_diesel_calc, pv_diesel_hyb, hybrid_1, hybrid_2, hybrid_3, hybrid_4,
+                                              sa_diesel_calc, hybrid_1, hybrid_2, hybrid_3, hybrid_4,
                                               hybrid_5, year, start_year, end_year, time_step)
 
             onsseter.pre_electrification(grid_calc, grid_price, year, time_step, start_year)
@@ -399,17 +407,17 @@ elif choice == 3:
                               grid_cap_gen_limit, grid_connect_limit, auto_intensification, prioritization)
 
             onsseter.results_columns(mg_hydro_calc, mg_wind_calc, mg_pv_calc, sa_pv_calc, mg_diesel_calc,
-                                     sa_diesel_calc, grid_calc, pv_diesel_hyb, hybrid_1, hybrid_2, hybrid_3, hybrid_4,
+                                     sa_diesel_calc, grid_calc, hybrid_1, hybrid_2, hybrid_3, hybrid_4,
                                      hybrid_5, year)
 
             onsseter.calculate_investments(mg_hydro_calc, mg_wind_calc, mg_pv_calc, sa_pv_calc, mg_diesel_calc,
-                                           sa_diesel_calc, grid_calc, pv_diesel_hyb, hybrid_1, hybrid_2, hybrid_3,
+                                           sa_diesel_calc, grid_calc, hybrid_1, hybrid_2, hybrid_3,
                                            hybrid_4, hybrid_5, year, end_year, time_step)
 
             onsseter.apply_limitations(eleclimit, year, time_step, prioritization, auto_intensification)
 
             onsseter.final_decision(mg_hydro_calc, mg_wind_calc, mg_pv_calc, sa_pv_calc, mg_diesel_calc, sa_diesel_calc,
-                                    grid_calc, pv_diesel_hyb, hybrid_1, hybrid_2, hybrid_3, hybrid_4, hybrid_5, year,
+                                    grid_calc, hybrid_1, hybrid_2, hybrid_3, hybrid_4, hybrid_5, year,
                                     end_year, time_step)
 
             onsseter.calc_summaries(df_summary, sumtechs, year)
