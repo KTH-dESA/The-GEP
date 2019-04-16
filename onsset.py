@@ -1144,7 +1144,8 @@ class SettlementProcessor:
 
         return urban_modelled
 
-    def elec_current_and_future(self, elec_actual, elec_actual_urban, elec_actual_rural, pop_tot, start_year):
+    def elec_current_and_future(self, elec_actual, elec_actual_urban, elec_actual_rural, pop_tot, start_year,
+                                min_night_lights=0, min_pop=50, max_transformer_dist=2, max_mv_dist=2, max_hv_dist=5):
         """
         Calibrate the current electrification status, and future 'pre-electrification' status
         """
@@ -1168,9 +1169,11 @@ class SettlementProcessor:
         if max(self.df[SET_DIST_TO_TRANS]) > 0:
             self.df[SET_CALIB_GRID_DIST] = self.df[SET_DIST_TO_TRANS]
             priority = 1
+            dist_limit = max_transformer_dist
         elif max(self.df[SET_MV_DIST_CURRENT]) > 0:
             self.df[SET_CALIB_GRID_DIST] = self.df[SET_MV_DIST_CURRENT]
             priority = 1
+            dist_limit = max_mv_dist
         else:
             self.df[SET_CALIB_GRID_DIST] = self.df[SET_HV_DIST_CURRENT]
             priority = 2
@@ -1185,8 +1188,8 @@ class SettlementProcessor:
             if priority == 1:
                 print(
                     'We have identified the existence of transformers or MV lines as input data; therefore we proceed using those for the calibration')
-                self.df.loc[(self.df[SET_CALIB_GRID_DIST] < 2) & (self.df[SET_NIGHT_LIGHTS] > 0) & (
-                        self.df[SET_POP_CALIB] > 50), SET_ELEC_CURRENT] = 1  # REVIEW 500 vs 300
+                self.df.loc[(self.df[SET_CALIB_GRID_DIST] < dist_limit) & (self.df[SET_NIGHT_LIGHTS] > min_night_lights) & (
+                        self.df[SET_POP_CALIB] > min_pop), SET_ELEC_CURRENT] = 1
                 urban_elec_modelled = self.df.loc[
                     (self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] > 1), SET_ELEC_POP_CALIB].sum()
                 rural_elec_modelled = self.df.loc[
@@ -1233,21 +1236,21 @@ class SettlementProcessor:
                 td_dist_2 = 0.1
                 while elec_actual - elec_modelled > 0.01:
                     if i < 50:
-                        pop_elec_2 = self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > 25) &
+                        pop_elec_2 = self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > min_pop) &
                                                  (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_POP_CALIB].sum()
                         if (pop_elec + pop_elec_2) / pop_tot > elec_actual:
                             elec_modelled = (pop_elec + pop_elec_2) / pop_tot
-                            self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > 25) &
+                            self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > min_pop) &
                                         (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_CURRENT] = 1
-                            self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > 25) &
+                            self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > min_pop) &
                                         (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_POP_CALIB] = self.df[SET_POP_CALIB]
                         else:
                             i += 1
                             td_dist_2 += 0.1
                     else:
-                        self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > 25) &
+                        self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > min_pop) &
                                     (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_CURRENT] = 1
-                        self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > 25) &
+                        self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > min_pop) &
                                     (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_POP_CALIB] = self.df[
                             SET_POP_CALIB]
                         elec_modelled = (pop_elec + pop_elec_2) / pop_tot
@@ -1257,8 +1260,8 @@ class SettlementProcessor:
             else:
                 print(
                     'No transformers or MV lines were identified as input data; therefore we proceed to the calibration with HV line info')
-                self.df.loc[(self.df[SET_CALIB_GRID_DIST] < 5) & (self.df[SET_NIGHT_LIGHTS] > 0) & (
-                        self.df[SET_POP_CALIB] > 300), SET_ELEC_CURRENT] = 1
+                self.df.loc[(self.df[SET_CALIB_GRID_DIST] < max_hv_dist) & (self.df[SET_NIGHT_LIGHTS] > min_night_lights) & (
+                        self.df[SET_POP_CALIB] > min_pop), SET_ELEC_CURRENT] = 1
 
                 urban_elec_modelled = self.df.loc[
                     (self.df[SET_ELEC_CURRENT] == 1) & (self.df[SET_URBAN] > 1), SET_ELEC_POP_CALIB].sum()

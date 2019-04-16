@@ -161,14 +161,12 @@ elif choice == 3:
         settlements_in_csv = base_dir  # os.path.join(base_dir, '{}.csv'.format(country))
         # settlements_out_csv = output_dir + '.csv' # os.path.join(output_dir, '{}_{}_{}.csv'.format(country, wb_tier_urban, diesel_tag))
         settlements_out_csv = os.path.join(output_dir,
-                                           '{}-1_{}_{}_{}_{}_{}_{}_{}_{}.csv'.format(countryID, popIndex, tierIndex,
+                                           '{}-1-{}_{}_{}_{}_{}_{}.csv'.format(countryID, popIndex, tierIndex,
                                                                                      fiveyearIndex, gridIndex, pvIndex,
-                                                                                     dieselIndex, productiveIndex,
                                                                                      prioIndex))
         summary_csv = os.path.join(output_dir,
-                                   '{}-1_{}_{}_{}_{}_{}_{}_{}_{}_summary.csv'.format(countryID, popIndex, tierIndex,
+                                   '{}-1-{}_{}_{}_{}_{}_{}_summary.csv'.format(countryID, popIndex, tierIndex,
                                                                                      fiveyearIndex, gridIndex, pvIndex,
-                                                                                     dieselIndex, productiveIndex,
                                                                                      prioIndex))
         # summary_csv = output_dir + 'summary.csv'
 
