@@ -1120,7 +1120,7 @@ class SettlementProcessor:
             yearly_rural_growth_rate_low = rural_growth_low ** (1 / project_life)
 
         # RUN_PARAM: Define here the years for which results should be provided in the output file.
-        yearsofanalysis = [2023, 2030]
+        yearsofanalysis = [2025, 2030]
 
         for year in yearsofanalysis:
             self.df[SET_POP + "{}".format(year) + 'High'] = self.df.apply(lambda row: row[SET_POP_CALIB] *

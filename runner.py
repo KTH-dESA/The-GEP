@@ -336,9 +336,9 @@ elif choice == 3:
         ### HERE STARTS THE ACTUAL ANALYSIS WITH THE INCLUSION OF TIME STEPS
 
         # RUN_PARAM: One shall define here the years of analysis (excluding start year) together with access targets per interval and timestep duration
-        yearsofanalysis = [2023, 2030]
-        eleclimits = {2023: five_year_target, 2030: 1}
-        time_steps = {2023: 5, 2030: 7}
+        yearsofanalysis = [2025, 2030]
+        eleclimits = {2025: five_year_target, 2030: 1}
+        time_steps = {2025: 7, 2030: 5}
 
         elements = ["1.Population", "2.New_Connections", "3.Capacity", "4.Investment"]
         techs = ["Grid", "SA_Diesel", "SA_PV", "MG_Diesel", "MG_PV", "MG_Wind", "MG_Hydro", "MG_Hybrid"]
