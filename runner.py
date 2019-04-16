@@ -420,5 +420,11 @@ elif choice == 3:
 
             onsseter.calc_summaries(df_summary, sumtechs, year)
 
+        for i in range(len(onsseter.df.columns)):
+            if onsseter.df.iloc[:, i].dtype == 'float64':
+                onsseter.df.iloc[:, i] = pd.to_numeric(onsseter.df.iloc[:, i], downcast='float')
+            elif onsseter.df.iloc[:, i].dtype == 'int64':
+                onsseter.df.iloc[:, i] = pd.to_numeric(onsseter.df.iloc[:, i], downcast='signed')
+
         df_summary.to_csv(summary_csv, index=sumtechs)
         onsseter.df.to_csv(settlements_out_csv, index=False)
