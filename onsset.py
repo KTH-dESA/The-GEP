@@ -1241,20 +1241,24 @@ class SettlementProcessor:
                         if (pop_elec + pop_elec_2) / pop_tot > elec_actual:
                             elec_modelled = (pop_elec + pop_elec_2) / pop_tot
                             self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > min_pop) &
-                                        (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_CURRENT] = 1
-                            self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > min_pop) &
                                         (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_POP_CALIB] = self.df[SET_POP_CALIB]
+                            self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > min_pop) &
+                                        (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_CURRENT] = 1
                         else:
                             i += 1
                             td_dist_2 += 0.1
                     else:
                         self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > min_pop) &
-                                    (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_CURRENT] = 1
+                                    (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_POP_CALIB] = self.df[SET_POP_CALIB]
                         self.df.loc[(self.df[SET_ELEC_CURRENT] == 0) & (self.df[SET_POP_CALIB] > min_pop) &
-                                    (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_POP_CALIB] = self.df[
-                            SET_POP_CALIB]
+                                    (self.df[SET_CALIB_GRID_DIST] < td_dist_2), SET_ELEC_CURRENT] = 1
                         elec_modelled = (pop_elec + pop_elec_2) / pop_tot
                         break
+
+                if elec_modelled > elec_actual:
+                    self.df[SET_ELEC_POP_CALIB] *= elec_actual / elec_modelled
+                pop_elec = self.df.loc[self.df[SET_ELEC_CURRENT] == 1, SET_ELEC_POP_CALIB].sum()
+                elec_modelled = pop_elec / pop_tot
 
             # RUN_PARAM: Calibration parameters if only HV lines are available
             else:
