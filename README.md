@@ -1,7 +1,8 @@
-# The-GEP
-Source code and supplementary material used in the Global Electrification Platform (GEP)
+# The-GEP-Explorer
+This branch contains information regarding the functionality of GEP "Explorer"
 
 ## Expected content
 
-* OnSSET source code used in GEP 2018
-* The GEP User Manual
+* The GEP "Explorer" [online platform] (http://randomcolour.com/)
+* The GEP "Explorer" [content](http://randomcolour.com/)
+* The GEP "Explorer" [Environment](http://randomcolour.com/)
