@@ -11,6 +11,7 @@ The GEP “Explorer” is an open access, interactive, online platform that allo
 
 The GEP “Explorer” allows customized rendering. The user can select base maps and other available layers that illustrate the country’s electrification status quo and overlay them with results from the electrification investment scenarios.
 
+
 .. figure:: images/GEP_Explorer_2.jpg
     :align: center
 
