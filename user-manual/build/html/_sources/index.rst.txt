@@ -4,11 +4,13 @@ Welcome to The GEP User's Guide!
 .. figure::  images/consortium.JPG
    :align:   center
 
-The Global Electrification Platform
+The Global Electrification Platform (GEP)
 +++++++++++++++++++++++++++++++++++++++++
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+The 2030 Agenda for Sustainable Development has set the goal of universal access to electricity by 2030 (SDG7). The challenge involves bringing electricity to populations with various socio-economic backgrounds and needs. Despite remarkable progress in the past years, energy access gaps still exist.
 
-Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Praesendapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus
+Coping with dilemmas of this nature requires thorough analysis of the social, technical and economic characteristics of each target location. This, in turn, requires access to reliable data and information e.g., location of population settlements, electricity demand levels, resource availability, poverty rate and economic activity, distance from functional infrastructure etc. Geographic Information Systems (GIS) and remote sensing techniques are becoming openly available and can now provide a range of location-specific information that has not been previously accessible.
+
+Under this framework **The World Bank**, **KTH Division of Energy Systems Analysis**, **Development Seed**, **World Resources Institute (WRI)**, **Cambridge university**, **Google** and **ABB** have developed the Global Electrification Platform (GEP). The GEP is being developed, used and updated in an open and transparent way. It aspires to become an open portal for electrification investment data, analysis and research. The following sections provide a brief overview.
 
 Contents
 +++++++++++++++++++++

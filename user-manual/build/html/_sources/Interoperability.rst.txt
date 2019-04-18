@@ -8,13 +8,13 @@ Data guidelines
 
 GEP modules have been designed in such way so as to allow flexibility in integrating electrification related datasets found in other databases and/or platforms as well as analytical outputs from various geospatial tools. Being able to incorporate such datasets or modelling results in the GEP ecosystem is thus an essential part of this initiative.
 
-In order to support the integration process, the GEP team has put together a list of input/output datasets and parameters that are common between several GIS based electrification modelling tools. Each dataset/parameter comes along with suggested metadata describing several characteristics that are important in the integration process. These include type, format, source, author and licence among others.
+In order to support the integration process, the GEP team has put together a list of input/output datasets and parameters that are common between several GIS based electrification modelling tools. Each dataset/parameter comes along with suggested standards and metadata describing several characteristics that are important in the integration process. These include type, format, source, author and licence among others.
 
 The list is available `here <https://docs.google.com/spreadsheets/d/1JiV6QT1IBkJR7Q-FntC2zl3aZI2X5IMxrDI9gWupG5M/edit?usp=sharing>`_.
 
 .. note::
     The above list was informed based on the functionalities of the Open Source Spatial
-    Electrification Tool (OnSSET), which was used in the development of EISs available in **GEP “Explorer”**.
+    Electrification Tool (OnSSET), which was used in the development of EISs in GEP 2018 available in **GEP “Explorer”**.
 
     Replicating EIS (as descried in later sections) using OnSSET 2018 – The GEP version (`link to source code <https://github.com/KTH-dESA/The-GEP>`_) requires that these input/output data guidelines are followed explicitly.
 
@@ -24,7 +24,7 @@ Modelling process guidelines
 ***********************************
 
 The GEP has been designed upon the core values of transparency, repeatability, and auditability. Therefore, open access of data and modelling processes as well as clear documentation of assumptions on decision parameters is very important. The following paragraphs provide an brief overview of the main modelling steps followed in the preparation of EISs available in **GEP “Explorer”**.
-Description is slip into two parts:
+Description is split into two parts:
 
     - **Part A.** Pipeline for the development of EISs for a country using OnSSET
     - **Part B.** Configuring & Ingesting EIS results into GEP “Explorer” locally
@@ -48,7 +48,7 @@ The development team at KTH dESA has developed a methodology for developing popu
 .. note::
     The above methodology requires processing in `QGIS <https://www.qgis.org/en/site/>`_ (an open-source GIS software). The KTH team has developed a QGIS plugin that automates the process of population cluster generation. The plugin together with how-to-use instructions are available `here <https://github.com/KTH-dESA>`__.
 
-    The methodology is based on the availability of HRLS population data. In case HRSL data are not available for the country or region of interest a modified version of the methodology can be used. The latter is still under review by the KTH team; please contact the team for further information.
+    The methodology is based on the availability of HRSL population data. In case HRSL data are not available for the country or region of interest a modified version of the methodology can be used. The latter is still under review by the KTH team; please contact the team for further information.
 
 **Step 2. Preparation of OnSSET input data files**
 
@@ -70,7 +70,7 @@ A listing of those parameters together with their role in the modelling process 
 The third step in the analysis includes the generation (and calibration) of a few additional parameters necessary for the electrification analysis.
 These include:
 
-    A. Energy resource indicators (e.g. wind capacity factor, or grid suitability grid)
+    A. Energy resource indicators (e.g. wind capacity factor, grid suitability)
     B. Population status & projections (Urban Vs Rural population, Electrified Vs non-electrified population (base year))
     C. Definition of demand goals per type of settlement
 

@@ -181,12 +181,12 @@
 <div class="section" id="data-guidelines">
 <h2>Data guidelines<a class="headerlink" href="#data-guidelines" title="Permalink to this headline">¶</a></h2>
 <p>GEP modules have been designed in such way so as to allow flexibility in integrating electrification related datasets found in other databases and/or platforms as well as analytical outputs from various geospatial tools. Being able to incorporate such datasets or modelling results in the GEP ecosystem is thus an essential part of this initiative.</p>
-<p>In order to support the integration process, the GEP team has put together a list of input/output datasets and parameters that are common between several GIS based electrification modelling tools. Each dataset/parameter comes along with suggested metadata describing several characteristics that are important in the integration process. These include type, format, source, author and licence among others.</p>
+<p>In order to support the integration process, the GEP team has put together a list of input/output datasets and parameters that are common between several GIS based electrification modelling tools. Each dataset/parameter comes along with suggested standards and metadata describing several characteristics that are important in the integration process. These include type, format, source, author and licence among others.</p>
 <p>The list is available <a class="reference external" href="https://docs.google.com/spreadsheets/d/1JiV6QT1IBkJR7Q-FntC2zl3aZI2X5IMxrDI9gWupG5M/edit?usp=sharing">here</a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>The above list was informed based on the functionalities of the Open Source Spatial
-Electrification Tool (OnSSET), which was used in the development of EISs available in <strong>GEP “Explorer”</strong>.</p>
+Electrification Tool (OnSSET), which was used in the development of EISs in GEP 2018 available in <strong>GEP “Explorer”</strong>.</p>
 <p>Replicating EIS (as descried in later sections) using OnSSET 2018 – The GEP version (<a class="reference external" href="https://github.com/KTH-dESA/The-GEP">link to source code</a>) requires that these input/output data guidelines are followed explicitly.</p>
 <p class="last">The GEP team is currently working in collecting feedback from other institutions active in the geospatial electrification modelling (Columbia University, MIT, NRECA, RLI and others) in order to update and expand the current list.</p>
 </div>
@@ -194,7 +194,7 @@ Electrification Tool (OnSSET), which was used in the development of EISs availab
 <div class="section" id="modelling-process-guidelines">
 <h2>Modelling process guidelines<a class="headerlink" href="#modelling-process-guidelines" title="Permalink to this headline">¶</a></h2>
 <p>The GEP has been designed upon the core values of transparency, repeatability, and auditability. Therefore, open access of data and modelling processes as well as clear documentation of assumptions on decision parameters is very important. The following paragraphs provide an brief overview of the main modelling steps followed in the preparation of EISs available in <strong>GEP “Explorer”</strong>.
-Description is slip into two parts:</p>
+Description is split into two parts:</p>
 <blockquote>
 <div><ul class="simple">
 <li><strong>Part A.</strong> Pipeline for the development of EISs for a country using OnSSET</li>
@@ -215,7 +215,7 @@ Description is slip into two parts:</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>The above methodology requires processing in <a class="reference external" href="https://www.qgis.org/en/site/">QGIS</a> (an open-source GIS software). The KTH team has developed a QGIS plugin that automates the process of population cluster generation. The plugin together with how-to-use instructions are available <a class="reference external" href="https://github.com/KTH-dESA">here</a>.</p>
-<p class="last">The methodology is based on the availability of HRLS population data. In case HRSL data are not available for the country or region of interest a modified version of the methodology can be used. The latter is still under review by the KTH team; please contact the team for further information.</p>
+<p class="last">The methodology is based on the availability of HRSL population data. In case HRSL data are not available for the country or region of interest a modified version of the methodology can be used. The latter is still under review by the KTH team; please contact the team for further information.</p>
 </div>
 <p><strong>Step 2. Preparation of OnSSET input data files</strong></p>
 <p>In the second step of the process, the two OnSSET input files are created.</p>
@@ -235,7 +235,7 @@ A listing of those parameters together with their role in the modelling process 
 These include:</p>
 <blockquote>
 <div><ol class="upperalpha simple">
-<li>Energy resource indicators (e.g. wind capacity factor, or grid suitability grid)</li>
+<li>Energy resource indicators (e.g. wind capacity factor, grid suitability)</li>
 <li>Population status &amp; projections (Urban Vs Rural population, Electrified Vs non-electrified population (base year))</li>
 <li>Definition of demand goals per type of settlement</li>
 </ol>
