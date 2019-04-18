@@ -10,6 +10,6 @@ This repository contains the most up-to date source code and tools supporting th
 
 ## Notes
 
-1: V.1 refers to the first version of the GEP with developments that took place until January 2018.
+* V.1 refers to the first version of the GEP with developments that took place until January 2018.
 
-2: Each of the above tools can be accessed in the repo's branches
+* Each of the above tools can be accessed in the repo's branches
