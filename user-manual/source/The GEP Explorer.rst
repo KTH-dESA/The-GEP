@@ -6,12 +6,12 @@ Overview
 
 The GEP “Explorer” is an open access, interactive, online platform that allows overview of electrification investment scenarios for a selection of countries. The scenarios present how to achieve universal electricity access in two steps. The first step is an outlook for a 5-year investment strategy. The second is ambitious full electrification by 2030. The user is able to easily move through 144 scenario permutations to meet the access goals.
 
-.. figure::  _images/GEP_Explorer.jpg
+.. figure::  images/GEP_Explorer.jpg
    :align:   center
 
 The GEP “Explorer” allows customized rendering. The user can select base maps and other available layers that illustrate the country’s electrification status quo and overlay them with results from the electrification investment scenarios.
 
-.. figure::  _images/GEP_Explorer_2.jpg
+.. figure::  images/GEP_Explorer_2.jpg
    :align:   center
 
 The number, type and parameterization of electrification investment scenarios along with their inherent assumptions derive from the annual GEP update. The process is open to everyone!
