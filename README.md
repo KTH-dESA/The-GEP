@@ -6,7 +6,7 @@ This repository contains the most up-to date source code and tools supporting th
 * The GEP "Explorer"
 * The GEP "Scenario Generator"
 * The GEP "Toolbox"
-* The GEP [User Manual](https://the-gep-user-manual.readthedocs.io/en/latest/)
+* The GEP [User Guide](https://the-gep-user-manual.readthedocs.io/en/latest/)
 
 ## Notes
 
