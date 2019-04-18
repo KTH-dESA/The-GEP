@@ -1,7 +1,38 @@
-# The-GEP
-Source code and supplementary material used in the Global Electrification Platform (GEP)
+# The GEP "Toolbox"
 
-## Expected content
+### Content
 
-* OnSSET source code used in GEP 2018
-* The GEP User Manual
+This repository contains the source code used to derive the electrification results for GEP V.1.
+
+### How-to-use Instructions 
+
+1. Clone repository in a directory at your local machine
+2. Open onsset.py and runner.py in the IDE of your preference (the description below assumes [PyCharm](https://www.jetbrains.com/pycharm/download/#section=windows))
+3. Make sure all dependencies are installed; a list is available at the top of each .py file
+4. Make sure that "specs_mw_onescenario.csv" and "Malawi_HRSL_All_Cells.csv" files are in the same directory. Both files shall follow the format and naming convention as indicated in this repository. Parameter values can be changed accordingly
+4. Run onsset.py and make sure there is no error
+5. Run runner.py
+  a. Select to calibrate the "Malawi_HRSL_All_Cells.csv" as per instructions. The process will create a new, calibrated input file; you shall specify the name (e.g. "Malawi_HRSL_All_Cells_Calibrated"
+  b. After calibration (taking place only once) start running scenarios as per instructions. Note that "Malawi_HRSL_All_Cells_Calibrated" shall be used as input.
+  c. The steps of the analysis will appear on your IDE's console.
+5. After a scenario run is complete, two output files will appear in the directory; one containing full results and another providing a summary.
+6. Import the full result .csv file into a GIS environment (QGIS, ArcMap) to vizualize the results.
+
+### Cautions
+
+The first input file ("specs_mw_onescenario.csv") contains most of the inputs parameters of the analysis such as total population, urban population ratio, diesel price etc.
+
+The second input file ("Malawi_HRSL_All_Cells.csv") contains all the GIS information (21 columns) for the settlements to be included in the analysis. The calibration process add a number of columns regarding population projection, current electrification rate and a few other geo-spatial characteristics. Please refer to the relevant code section for a close review.
+
+The "Malawi_HRSL_All_Cells.csv" represents population settlements in the form of vectors. The process of generating these vectors is described in detail in Annex B of the paper. 
+
+Both onsset.py and runner.py files are supported by the "TODO" functionality. There are 4 patterns in the current version of the code; The RUN_PARAM pattern will guide you through all sensitive - country specific - parameters of the analysis. RUN_PARAM values in this version of the code are reflective for the case of Malawi; they need to be adjusted accordingly in case the code is used for another country.
+
+### Supplementary material
+
+- Original OnSSET source code is available on Github [here](https://github.com/KTH-dESA/OnSSET-2018).
+
+- More information regarding OnSSET is available at [OnSSET.org](http://www.onsset.org/).
+
+- For any additional information please contact the GEP team [here.](https://the-gep-user-manual.readthedocs.io/en/latest/Contact.html)
+
