@@ -101,11 +101,11 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Interoperability</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#data-guidelines">Data guidelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#modelling-process-guidelines">Modelling process guidelines</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#part-a-pipeline-for-the-development-of-eiss-for-a-country-using-onsset"><strong>Part A.</strong> Pipeline for the development of EISs for a country using OnSSET</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#part-a-pipeline-for-the-development-of-eiss-for-a-country"><strong>Part A.</strong> Pipeline for the development of EISs for a country</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#part-b-configuring-ingesting-eis-results-into-gep-explorer-locally">Part B. Configuring &amp; Ingesting EIS results into GEP “Explorer” locally</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#updating-process-guidelines">Updating process guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#updating-process-guidelines-to-be-updated">Updating process guidelines (To be updated)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="FAQ.html">FAQ</a></li>
@@ -193,78 +193,19 @@ Electrification Tool (OnSSET), which was used in the development of EISs in GEP 
 </div>
 <div class="section" id="modelling-process-guidelines">
 <h2>Modelling process guidelines<a class="headerlink" href="#modelling-process-guidelines" title="Permalink to this headline">¶</a></h2>
-<p>The GEP has been designed upon the core values of transparency, repeatability, and auditability. Therefore, open access of data and modelling processes as well as clear documentation of assumptions on decision parameters is very important. The following paragraphs provide an brief overview of the main modelling steps followed in the preparation of EISs available in <strong>GEP “Explorer”</strong>.
-Description is split into two parts:</p>
+<p>The GEP has been designed upon the core values of transparency, repeatability, and auditability. Therefore, open access of data and modelling processes as well as clear documentation of assumptions on decision parameters is very important. The following paragraphs describe two parts:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>Part A.</strong> Pipeline for the development of EISs for a country using OnSSET</li>
+<li><strong>Part A.</strong> Pipeline for the development of EISs for a country</li>
 <li><strong>Part B.</strong> Configuring &amp; Ingesting EIS results into GEP “Explorer” locally</li>
 </ul>
 </div></blockquote>
-<div class="section" id="part-a-pipeline-for-the-development-of-eiss-for-a-country-using-onsset">
-<h3><strong>Part A.</strong> Pipeline for the development of EISs for a country using OnSSET<a class="headerlink" href="#part-a-pipeline-for-the-development-of-eiss-for-a-country-using-onsset" title="Permalink to this headline">¶</a></h3>
-<p>The following steps can be used to replicate the EISs as presented in the GEP “Explorer”. Many of the steps refer to Malawi which was used as an experimental case study in the development phase. The process can - of course - be replicated for other countries as well.</p>
+<div class="section" id="part-a-pipeline-for-the-development-of-eiss-for-a-country">
+<h3><strong>Part A.</strong> Pipeline for the development of EISs for a country<a class="headerlink" href="#part-a-pipeline-for-the-development-of-eiss-for-a-country" title="Permalink to this headline">¶</a></h3>
+<p>The pipeline for the development of electrification investment scenarios has been presented in the GEP “Toolbox” section for the case of OnSSET. Although the pipeline is fairly flexible and can be adopted to the modelling framework used, the scenario/results generation shall be developed as per data guidelines presented above.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This section is supported by a <a class="reference external" href="TBD">peer-reviewed academic publication</a> available online since April 2019.</p>
-</div>
-<p><strong>Step 1. Collection of necessary data</strong></p>
-<p>The first step in the modelling process requires the collection and preparation of all the necessary datasets and input parameters required to inform the electrification analysis. This include both GIS and non-GIS inputs as described in the section of data guidelines above. All datasets used in GEP are open, with source being provided in metadata. The list is available <a class="reference external" href="https://docs.google.com/spreadsheets/d/1JiV6QT1IBkJR7Q-FntC2zl3aZI2X5IMxrDI9gWupG5M/edit?usp=sharing">here</a>.</p>
-<p>An important part of the process requires the construction of population settlements, which is the basis of the electrification analysis in OnSSET. Population settlements are available in the form of raster or vector. The OnSSET model is able to run using either of those, however, the selection defines all next steps in the analysis thus is presented as a separate step. In order to get the most out of the GEP services vector population format is suggested hereafter.</p>
-<p>The development team at KTH dESA has developed a methodology for developing population vectors (or population clusters) based on open access, raster population layers. A step-by-step description of the methodology is available <a class="reference external" href="TBD">here</a>.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>The above methodology requires processing in <a class="reference external" href="https://www.qgis.org/en/site/">QGIS</a> (an open-source GIS software). The KTH team has developed a QGIS plugin that automates the process of population cluster generation. The plugin together with how-to-use instructions are available <a class="reference external" href="https://github.com/KTH-dESA">here</a>.</p>
-<p class="last">The methodology is based on the availability of HRSL population data. In case HRSL data are not available for the country or region of interest a modified version of the methodology can be used. The latter is still under review by the KTH team; please contact the team for further information.</p>
-</div>
-<p><strong>Step 2. Preparation of OnSSET input data files</strong></p>
-<p>In the second step of the process, the two OnSSET input files are created.</p>
-<p>The first file is a comma delimited file (.csv) file. Each row represents a population cluster while each column a characteristic (or attribute) of this cluster. Attributes are extracted from the GIS datasets collected in Step 1. The extraction commands can be executed manually in QGIS. However, the KTH team has created a QGIS plugin in order to automate the process. The plugin is available together with how-to-use instructions <a class="reference external" href="https://github.com/KTH-dESA/Cluster-based_extraction_OnSSET">here</a>.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The number of attributes depends on data availability. For the GEP the input file consists of 24 attribute columns. A sample file of this type is available for Malawi as <a class="reference external" href="https://github.com/KTH-dESA/The-GEP">“Malawi.csv”</a>.</p>
-</div>
-<p>The second file is an excel (.xlsx) file (usually named “Specs”) that contains non-GIS input data (e.g. years of analysis, population growth etc.) and calibration parameters of the model.
-A listing of those parameters together with their role in the modelling process is available <a class="reference external" href="https://docs.google.com/spreadsheets/d/1vMsCQNoe1IDqMgYoGFPZLGO1e0xfxhZiB4_HexwXZ-k/edit#gid=1203867896">here</a>.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">A sample file of this type is available for Malawi as <a class="reference external" href="https://github.com/KTH-dESA/The-GEP">“specs_mw_one_scenario.xlsx”</a>.</p>
-</div>
-<p><strong>Step 3. Preparation/Calibration of input files</strong></p>
-<p>The third step in the analysis includes the generation (and calibration) of a few additional parameters necessary for the electrification analysis.
-These include:</p>
-<blockquote>
-<div><ol class="upperalpha simple">
-<li>Energy resource indicators (e.g. wind capacity factor, grid suitability)</li>
-<li>Population status &amp; projections (Urban Vs Rural population, Electrified Vs non-electrified population (base year))</li>
-<li>Definition of demand goals per type of settlement</li>
-</ol>
-</div></blockquote>
-<p>These functionalities are embedded in the OnSSET code basis. The calibration process takes place in the beginning of a model run and usually happens only once. The code is set to notify the user about the calibration progress via messages in console.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">For more information on the calibration process in OnSSET please redirect to the relevant section in the manual available <a class="reference external" href="https://onsset-manual.readthedocs.io/en/latest/index.html">here</a>.</p>
-</div>
-<p><strong>Step 4. Scenario runs</strong></p>
-<p>The last step of the process requires that the OnSSET model will be set to run a number of predefined EISs. The model is currently configured to generate 144 EISs as a combination of six parameters (hereafter called “levers”)
-that include:</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li>Population growth</li>
-<li>Electricity demand target</li>
-<li>5-year investment plan</li>
-<li>Grid generating cost of electricity</li>
-<li>PV system cost</li>
-<li>Prioritization algorithm</li>
-</ol>
-</div></blockquote>
-<p>Values and number of options for these levers can be modified via the “specs.xlsx” file. A sample file of this type is available for Malawi as <a class="reference external" href="https://github.com/KTH-dESA/The-GEP">“specs_mw_144_scenarios.xlsx”</a>.</p>
-<p>Further description on the functionality of levers is available <a class="reference external" href="https://docs.google.com/presentation/d/1OQJi-_24pjgCYNb9N-5hS4T0wx4D2q0UirYkUbzlLLQ/edit#slide=id.g4219fed47f_0_0">here</a>.</p>
-<p>The model yields two types of output files (both .csv) per scenario. The first (full) file contains all the available results and is later on used in the visualization process. The second (light) file contains a summary of the EIS’s key parameters (electrification mix, capacity and investment requirements). The list of output parameters along with a brief description is available <a class="reference external" href="https://docs.google.com/spreadsheets/d/1vMsCQNoe1IDqMgYoGFPZLGO1e0xfxhZiB4_HexwXZ-k/edit#gid=819349467">here</a>.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>The next version of the GEP will include two additional levers studying the impact of productive uses and diesel price (related to hybrid mini-grids) in the electrification results.</p>
-<p class="last">Changing levers is possible with OnSSET however, this would require further configuration of the model. This of course will require re-configuration of the GEP “Explorer” (described in the next section).</p>
+<p class="last">Changes of the modelling pipeline is possible however, this will also require re-configuration of the GEP “Explorer” as described in the next section. Custom configuration of GEP “Explorer” is possible on local machines. Re-configuration of the online version of the GEP “Explorer” is the output of an annual updating process described below.</p>
 </div>
 </div>
 <div class="section" id="part-b-configuring-ingesting-eis-results-into-gep-explorer-locally">
@@ -273,11 +214,11 @@ that include:</p>
 More information on setting the development environment, configuring and ingesting the EIS result data so as to enjoy <strong>GEP “Explorer”</strong> services offline is available <a class="reference external" href="http://devseed.com/gep-docs/">here.</a></p>
 </div>
 </div>
-<div class="section" id="updating-process-guidelines">
-<h2>Updating process guidelines<a class="headerlink" href="#updating-process-guidelines" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="updating-process-guidelines-to-be-updated">
+<h2>Updating process guidelines (To be updated)<a class="headerlink" href="#updating-process-guidelines-to-be-updated" title="Permalink to this headline">¶</a></h2>
 <p>The annual suite of Electrification Investment Scenarios (EIS’s) will include a set of least cost investment scenarios for each target country. The scenarios will be defined by different levels of desired use, the expected costs of technology, and other ‘levers’ etc. These updates will reflect advances in: algorithms and models; improvements in data input; as well as increased scenarios defined by increasingly relevant and available ‘levers’.</p>
 <p>In addition, every year an updated version of GEP “Explorer” and GEP “Scenario Generator” will be released. A process will be set up for active updating of these with outreach to partners such that the latest available modelling, data and analysis is both used and compatible with the GEP.  Similarly, each year, advances in standards and updated teaching material will be released.</p>
-<p>The first pre-release of the GEP2018 is planned for the <em>Optimus Community Summer School</em> in June 2019. Successive releases of the GEP will be made in the last quarter of each year. Calls for input to the GEP will be made and received by August each year.</p>
+<p>The first release of the GEP is planned for the <em>Optimus Community Summer School</em> in June 2019. Successive releases of the GEP will be made in the last quarter of each year. Calls for input to the GEP will be made and received by August each year.</p>
 </div>
 </div>
 
